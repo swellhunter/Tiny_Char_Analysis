@@ -16,9 +16,9 @@
 */
 
 #if defined (__AVR_HAVE_JMP_CALL__)
-  #define REBOOT asm("jmp 0");
+  #define VECT_0 asm("jmp 0");
 #else
-  #define REBOOT asm("rjmp 0");
+  #define VECT_0 asm("rjmp 0");
   #undef  LED_BUILTIN
   #define LED_BUILTIN 2 /* 0 is Tx now */
 #endif
@@ -45,7 +45,10 @@ void loop() {
     int thisChar = Serial.read();
     /* test for Ctrl-C and reboot if sent */
     if (thisChar == 3) {
-      REBOOT;
+      SP    = RAMEND;
+      SREG  = 0;
+      MCUSR = 0;
+      VECT_0;
     }
 
     // say what was sent: flash LED_BUILTIN to show we are thinking really hard about it....
