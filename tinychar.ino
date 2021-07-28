@@ -48,7 +48,7 @@ void loop() {
       SP    = RAMEND;
       SREG  = 0;
       MCUSR = 0;
-      VECT_0;
+      VECT_0
     }
 
     // say what was sent: flash LED_BUILTIN to show we are thinking really hard about it....
